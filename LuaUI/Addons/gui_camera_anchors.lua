@@ -15,14 +15,9 @@ local SetCameraState = Spring.SetCameraState
 local GetConfigInt = Spring.GetConfigInt
 local SendCommands = Spring.SendCommands
 
-function addon.Initialize()
-	SG.actions.AddAction(addon, "set_camera_anchor", SetCameraAnchor, nil, "p")
-	SG.actions.AddAction(addon, "focus_camera_anchor", FocusCameraAnchor, nil, "p")
-end
-
 local cameraAnchors = {}
 
-function SetCameraAnchor(_, _, args)
+local function setCameraAnchor(_, _, args)
 	local anchorId = args[1]
 	local cameraState = GetCameraState()
 
@@ -33,7 +28,7 @@ function SetCameraAnchor(_, _, args)
 	return true
 end
 
-function FocusCameraAnchor(_, _, args)
+local function focusCameraAnchor(_, _, args)
 	local anchorId = args[1]
 	local cameraState = cameraAnchors[anchorId]
 
@@ -50,4 +45,9 @@ function FocusCameraAnchor(_, _, args)
 	SetCameraState(cameraState, 0)
 
 	return true
+end
+
+function addon.Initialize()
+	SG.actions.AddAction(addon, "set_camera_anchor", setCameraAnchor, nil, "p")
+	SG.actions.AddAction(addon, "focus_camera_anchor", focusCameraAnchor, nil, "p")
 end
