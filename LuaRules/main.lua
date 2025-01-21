@@ -1,1 +1,1 @@
-VFS.Include("LuaGadgets/gadgets.lua", nil, VFS.BASE)
+VFS.Include("LuaHandler/main.lua", nil, VFS.GAME)

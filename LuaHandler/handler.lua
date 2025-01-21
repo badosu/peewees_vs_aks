@@ -10,7 +10,10 @@
 --
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
---FIXME name widgets & gadgets AddOns internally
+
+local synced = Script.GetSynced()
+Spring.Log(LUA_NAME, "info", ("Starting %s LuaHandler"):format(synced and "synced" or "unsynced"))
+
 function tprint(tbl, indent)
 	if not indent then
 		indent = 0
@@ -104,11 +107,10 @@ end
 --
 
 handler = {
-	name = "widgetHandler",
-	addonName = "widget",
+	name = "luaHandler",
+	addonName = "addon",
 
 	verbose = true,
-	autoUserWidgets = false, --FIXME move to widget
 
 	addons = CreateList("addons", SortAddonsFunc), --// all loaded addons
 	configData = {},
@@ -188,7 +190,7 @@ local engineCallIns = Script.GetCallInList() --// important!
 --// Create list of all known callins (any others used in addons won't work!)
 local knownCallIns = handler.knownCallIns
 for ciName, ciParams in pairs(engineCallIns) do
-	if (not ciParams.unsynced) and ciParams.controller and (not Script.GetSynced()) then
+	if (not ciParams.unsynced) and ciParams.controller and not synced then
 		--// skip synced only events when we are in an unsynced enviroment
 	else
 		knownCallIns[ciName] = ciParams
@@ -321,7 +323,7 @@ end
 local function GetAllAddonFiles(quiet)
 	local spLog = (quiet and function() end) or Spring.Log
 	local addonFiles = {}
-	for i, dir in pairs(ADDON_DIRS) do
+	for _, dir in pairs(ADDON_DIRS) do
 		spLog(LUA_NAME, "info", "Scanning: " .. dir)
 		local files = VFS.DirList(dir, "*.lua", VFSMODE)
 		if files then
@@ -374,7 +376,7 @@ function handler:SearchForNew(quiet)
 end
 
 function handler:DetectEnabledAddons()
-	for i, ki in pairs(handler.knownInfos) do
+	for _, ki in pairs(handler.knownInfos) do
 		if not ki.active then
 			--// default enabled?
 			local defEnabled = ki.enabled

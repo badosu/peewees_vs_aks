@@ -216,11 +216,11 @@ local function KeyAction(press, _, _, isRepeat, _, actions)
 		actionSet = keyReleaseActions
 	end
 
-	for _, bAction in ipairs(actions) do
-		local cmd = bAction["command"]
-		local extra = bAction["extra"]
-		local words = ssplit(extra)
-		if TryAction(actionSet, cmd, extra, words, isRepeat, not press, actions) then
+	for _, action in ipairs(actions) do
+		local cmd = action["command"]
+		local extra = action["extra"]
+		local args = ssplit(extra)
+		if TryAction(actionSet, cmd, extra, args, isRepeat, not press, actions) then
 			return true
 		end
 	end
@@ -231,7 +231,7 @@ end
 local function TextAction(line, _)
 	assert(_ == nil, "actionHandler:Foobar() is deprecated, use actionHandler.Foobar()!")
 
-	local words = MakeWords(line)
+	local words = ssplit(line)
 	local cmd = words[1]
 	if not cmd then
 		return false

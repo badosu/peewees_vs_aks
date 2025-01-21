@@ -173,7 +173,7 @@ end
 
 function hHookFuncs.MouseRelease(x, y, button)
 	local mo = handler.mouseOwner
-	local mx, my, lmb, mmb, rmb = Spring.GetMouseState()
+	local _, _, lmb, mmb, rmb = Spring.GetMouseState()
 	if not (lmb or mmb or rmb) then
 		handler.mouseOwner = nil
 	end

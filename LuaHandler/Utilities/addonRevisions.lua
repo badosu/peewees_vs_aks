@@ -20,7 +20,7 @@ require("table.lua")
 
 AddonRevs = {}
 
-local startTimer = Spring.GetTimer()
+--local startTimer = Spring.GetTimer()
 
 local function GetDefaultKnownInfo(filepath, basename)
 	return {
@@ -49,7 +49,7 @@ function AddonRevs.LoadAddonInfoRev2(filepath, _VFSMODE)
 	ki._rev = 2
 
 	_VFSMODE = _VFSMODE or VFSMODE
-	local loadEnv = { addon = { InGetInfo = true }, math = math }
+	local loadEnv = { addon = { InGetInfo = true, Synced = Script.GetSynced() }, math = math }
 
 	local success, rvalue = pcall(VFS.Include, filepath, loadEnv, _VFSMODE)
 	if not success then
@@ -203,9 +203,10 @@ function AddonRevs.NewAddonRev1()
 	h.GetViewSizes = function()
 		return gl.GetViewSizes()
 	end
-	h.GetHourTimer = function()
-		return Spring.DiffTimers(Spring.GetTimer(), startTimer) % 3600
-	end
+	-- Do we want timers in synced? Works only in unsynced
+	-- h.GetHourTimer = function()
+	-- 	return Spring.DiffTimers(Spring.GetTimer(), startTimer) % 3600
+	-- end
 	h.IsMouseOwner = function()
 		return (handler.mouseOwner == addon)
 	end

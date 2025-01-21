@@ -6,7 +6,8 @@ if addon.InGetInfo then
 		date = "Mar 12, 2023",
 		license = "GNU GPL, v2 or later",
 		layer = 0,
-		enabled = false,
+		enabled = true,
+		depend = { "Actions" },
 	}
 end
 

@@ -15,7 +15,7 @@
 --// 1: enabled, but can be overriden by widget.GetInfo().unsafe
 --// 2: always enabled
 SAFEWRAP = 1
-SAFEDRAW = false  --// requires SAFEWRAP to work
+SAFEDRAW = false --// requires SAFEWRAP to work
 
 --//
 VFSMODE = VFS.RAW_FIRST
@@ -36,30 +36,29 @@ if LUA_NAME == "LuaUI" then
 	assert(LUAUI_DIRNAME)
 
 	--// Config & Widget Locations
-	ORDER_FILENAME  = LUAUI_DIRNAME .. 'Config/' .. Game.modShortName .. '_order.lua'
-	CONFIG_FILENAME = LUAUI_DIRNAME .. 'Config/' .. Game.modShortName .. '_data.lua'
-	KNOWN_FILENAME  = LUAUI_DIRNAME .. 'Config/' .. Game.modShortName .. '_known.lua'
+	ORDER_FILENAME = LUAUI_DIRNAME .. "Config/" .. Game.modShortName .. "_order.lua"
+	CONFIG_FILENAME = LUAUI_DIRNAME .. "Config/" .. Game.modShortName .. "_data.lua"
+	KNOWN_FILENAME = LUAUI_DIRNAME .. "Config/" .. Game.modShortName .. "_known.lua"
 
-	ADDON_DIRS     = {
-		LUAUI_DIRNAME .. 'Addons/';
-		LUAUI_DIRNAME .. 'Widgets/';
-		LUAUI_DIRNAME .. 'SystemAddons/';
-		LUAUI_DIRNAME .. 'SystemWidgets/';
-		LUA_DIRNAME .. 'chili/'; -- DEPRECATED: Scheduled for removal in 103
+	ADDON_DIRS = {
+		LUAUI_DIRNAME .. "Addons/",
+		LUAUI_DIRNAME .. "Widgets/",
+		LUAUI_DIRNAME .. "SystemAddons/",
+		LUAUI_DIRNAME .. "SystemWidgets/",
 	}
 	--// Create the "LuaUI/Config" directory
-	Spring.CreateDir(LUAUI_DIRNAME .. 'Config') --FIXME LuaRules!
+	Spring.CreateDir(LUAUI_DIRNAME .. "Config") --FIXME LuaRules!
 
-	handler:Load(LUAUI_DIRNAME .. "SystemWidgets/BlockUserWidgets.lua" --[[, VFS.ZIP]])
+	--handler:Load(LUAUI_DIRNAME .. "SystemWidgets/BlockUserWidgets.lua" --[[, VFS.ZIP]])
 else
 	AddonNames = handler.AddonName .. "s/"
 
-	ADDON_DIRS     = {
-		LUA_DIRNAME .. 'Addons/';
-		LUA_DIRNAME .. AddonNames;
-		LUA_DIRNAME .. 'SystemAddons/';
-		LUA_DIRNAME .. 'System' .. AddonNames;
-		LUA_DIRNAME .. 'chili/'; -- DEPRECATED: Scheduled for removal in 103
+	ADDON_DIRS = {
+		LUA_DIRNAME .. "Addons/",
+		LUA_DIRNAME .. AddonNames,
+		LUA_DIRNAME .. "SystemAddons/",
+		LUA_DIRNAME .. "System" .. AddonNames,
 	}
 end
+
 LoadLibraries()
